@@ -1,12 +1,26 @@
 from src.utils.graph_loader import GraphLoader
-from configuration.constant import *
+from src.algorithm.HITS import HITS
+from src.algorithm.page_rank import PageRank
+from src.algorithm.sim_rank import SimRank
+from src.data_structure.similarity import Similarity
+from configuration.config import *
 
 
-graph_loader = GraphLoader()
-for filename in GRAPH_FILES:
-    graph_loader.load_graph(DATA_FOLDER + filename, FileMode.GRAPH)
-    graph = graph_loader.get_graph()
-    graph.display()
-graph_loader.load_graph(DATA_FOLDER + IBM_FILE, FileMode.IBM)
-graph = graph_loader.get_graph()
-graph.display()
+def load_graph():
+    graph_loader = GraphLoader()
+    graph_loader.load_graph(DATA_FOLDER + DATA_FILE, FileMode.GRAPH)
+    return graph_loader.get_graph()
+
+
+graph = load_graph()
+sim = Similarity(graph, DECAY_FACTOR)
+print('Load complete')
+
+if ALGORITHM == Algorithm.HITS:
+    alg = HITS(graph)
+elif ALGORITHM == Algorithm.PAGE_RANK:
+    alg = PageRank(graph, DAMPING_FACTOR)
+else:
+    alg = SimRank(graph, sim)
+result = alg.run(10)
+result.display()

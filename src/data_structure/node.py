@@ -61,6 +61,18 @@ class Node:
                 return
         self.__parents.append(new_parent)
 
+    def update_auth(self):
+        self.auth = sum(node.hub for node in self.parents)
+
+    def update_hub(self):
+        self.hub = sum(node.auth for node in self.children)
+
+    def update_page_rank(self, d, n):
+        in_links = self.parents
+        total_pagerank = sum(node.page_rank / len(node.children) for node in in_links)
+        self.page_rank = d / n + (1 - d) * total_pagerank
+
     # display
     def __repr__(self):
-        return self.name
+        return '(' + str(self.name) + \
+               ', auth:' + str(self.auth) + ' hub:' + str(self.hub) + ' pagerank:' + str(self.page_rank) + ')'

@@ -6,6 +6,10 @@ class FileMode(Enum):
     IBM = 2
 
 
+class Algorithm(Enum):
+    HITS = 1
+    PAGE_RANK = 2
+    SIM_RANK = 3
+
+
 DATA_FOLDER = 'datas/'
-GRAPH_FILES = ['graph_1.txt', 'graph_2.txt', 'graph_3.txt', 'graph_4.txt', 'graph_5.txt', 'graph_6.txt']
-IBM_FILE = 'IBM.txt'

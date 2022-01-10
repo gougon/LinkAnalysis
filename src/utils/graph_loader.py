@@ -23,7 +23,7 @@ class GraphLoader:
                 [parent, child] = data.strip().split(',')
             else:
                 [parent, child] = data.split()[1:]
-            self.__graph.add_edge(parent, child)
+            self.__graph.add_edge(int(parent), int(child))
 
     def get_graph(self):
         if self.__graph is None:
